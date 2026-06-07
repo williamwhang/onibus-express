@@ -1,0 +1,15 @@
+import type { HTMLAttributes, ReactNode } from 'react'
+
+type ContainerProps = HTMLAttributes<HTMLDivElement> & {
+  children: ReactNode
+}
+
+export function Container({ children, className = '', ...props }: ContainerProps) {
+  const classes = className ? `container ${className}` : 'container'
+
+  return (
+    <div className={classes} {...props}>
+      {children}
+    </div>
+  )
+}
