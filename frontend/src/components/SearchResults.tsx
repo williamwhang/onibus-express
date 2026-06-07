@@ -1,18 +1,13 @@
+import type { SearchFormValues } from '../types/search'
 import type { Trip } from '../types/trip'
 import { formatDate } from '../utils/formatters'
 import { TripCard } from './TripCard'
-
-type SearchContext = {
-  origin: string
-  destination: string
-  departure: string
-}
 
 type SearchResultsProps = {
   loading: boolean
   hasSearched: boolean
   trips: Trip[]
-  context: SearchContext | null
+  context: SearchFormValues | null
   onClear: () => void
   onSelectTrip: (trip: Trip) => void
 }

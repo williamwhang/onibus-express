@@ -11,7 +11,7 @@ export const trips: Trip[] = [
     arrivalTime: '12:00',
     duration: '6h',
     price: 89.9,
-    seats: 14,
+    seats: 28,
   },
   {
     id: 'itapemirim-executivo-0830',

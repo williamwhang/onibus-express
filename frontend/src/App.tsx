@@ -1,19 +1,12 @@
 import { useEffect, useRef, useState } from 'react'
-import { Container } from './components/Container'
-import { Header } from './components/Header'
-import { SearchCard } from './components/SearchCard'
-import { SearchResults } from './components/SearchResults'
 import { trips as mockTrips } from './data/trips'
+import { CheckoutPage } from './pages/CheckoutPage'
+import { SearchPage } from './pages/SearchPage'
+import type { SearchErrors, SearchFormValues } from './types/search'
 import type { Trip } from './types/trip'
 import { normalizeText } from './utils/formatters'
 
-type SearchFormValues = {
-  origin: string
-  destination: string
-  departure: string
-}
-
-type SearchErrors = Partial<Record<keyof SearchFormValues, string>>
+type View = 'search' | 'checkout'
 
 const initialValues: SearchFormValues = {
   origin: '',
@@ -23,6 +16,8 @@ const initialValues: SearchFormValues = {
 
 function App() {
   const searchTimeoutRef = useRef<number | null>(null)
+  const [view, setView] = useState<View>('search')
+  const [selectedTrip, setSelectedTrip] = useState<Trip | null>(null)
   const [formValues, setFormValues] = useState<SearchFormValues>(initialValues)
   const [errors, setErrors] = useState<SearchErrors>({})
   const [loading, setLoading] = useState(false)
@@ -88,10 +83,11 @@ function App() {
     setErrors({})
     setLoading(true)
     setHasSearched(true)
+    setView('search')
 
     const searchOrigin = normalizeText(formValues.origin)
     const searchDestination = normalizeText(formValues.destination)
-    const searchValues = {
+    const nextContext = {
       origin: formValues.origin.trim(),
       destination: formValues.destination.trim(),
       departure: formValues.departure,
@@ -109,7 +105,7 @@ function App() {
       })
 
       setResults(filteredTrips)
-      setSearchContext(searchValues)
+      setSearchContext(nextContext)
       setLoading(false)
       searchTimeoutRef.current = null
     }, 600)
@@ -127,47 +123,42 @@ function App() {
     setHasSearched(false)
     setResults([])
     setSearchContext(null)
+    setSelectedTrip(null)
+    setView('search')
   }
 
   function handleSelectTrip(trip: Trip) {
-    console.log('TODO: avancar para o checkout na proxima etapa', trip)
+    setSelectedTrip(trip)
+    setView('checkout')
+  }
+
+  function handleBackToResults() {
+    setView('search')
+  }
+
+  if (view === 'checkout' && selectedTrip) {
+    return (
+      <CheckoutPage
+        trip={selectedTrip}
+        searchContext={searchContext}
+        onBackToResults={handleBackToResults}
+      />
+    )
   }
 
   return (
-    <div className="app-shell">
-      <Header />
-      <main>
-        <section className="hero-section">
-          <Container className="hero-content">
-            <h1>Reserve sua passagem de ônibus</h1>
-            <p>Compare horários e preços das melhores empresas do Brasil</p>
-          </Container>
-        </section>
-
-        <section className="search-section">
-          <Container>
-            <div className="search-card-wrapper">
-              <SearchCard
-                values={formValues}
-                errors={errors}
-                onFieldChange={handleFieldChange}
-                onSearch={handleSearch}
-                isLoading={loading}
-              />
-            </div>
-
-            <SearchResults
-              loading={loading}
-              hasSearched={hasSearched}
-              trips={results}
-              context={searchContext}
-              onClear={handleClearSearch}
-              onSelectTrip={handleSelectTrip}
-            />
-          </Container>
-        </section>
-      </main>
-    </div>
+    <SearchPage
+      formValues={formValues}
+      errors={errors}
+      isLoading={loading}
+      hasSearched={hasSearched}
+      results={results}
+      searchContext={searchContext}
+      onFieldChange={handleFieldChange}
+      onSearch={handleSearch}
+      onClear={handleClearSearch}
+      onSelectTrip={handleSelectTrip}
+    />
   )
 }
 
