@@ -2,12 +2,15 @@ import { useEffect, useRef, useState } from 'react'
 import { trips as mockTrips } from './data/trips'
 import { CheckoutPage } from './pages/CheckoutPage'
 import { SearchPage } from './pages/SearchPage'
+import { SuccessPage } from './pages/SuccessPage'
 import type { Passenger } from './types/passenger'
+import type { Reservation } from './types/reservation'
 import type { SearchErrors, SearchFormValues } from './types/search'
 import type { Trip } from './types/trip'
 import { normalizeText } from './utils/formatters'
+import { generateReservationCode } from './utils/reservation'
 
-type View = 'search' | 'checkout'
+type View = 'search' | 'checkout' | 'success'
 
 const initialValues: SearchFormValues = {
   origin: '',
@@ -17,10 +20,13 @@ const initialValues: SearchFormValues = {
 
 function App() {
   const searchTimeoutRef = useRef<number | null>(null)
+  const confirmationTimeoutRef = useRef<number | null>(null)
   const [view, setView] = useState<View>('search')
   const [selectedTrip, setSelectedTrip] = useState<Trip | null>(null)
   const [selectedSeat, setSelectedSeat] = useState<string | null>(null)
   const [passenger, setPassenger] = useState<Passenger | null>(null)
+  const [reservation, setReservation] = useState<Reservation | null>(null)
+  const [isConfirmingReservation, setIsConfirmingReservation] = useState(false)
   const [formValues, setFormValues] = useState<SearchFormValues>(initialValues)
   const [errors, setErrors] = useState<SearchErrors>({})
   const [loading, setLoading] = useState(false)
@@ -32,6 +38,10 @@ function App() {
     return () => {
       if (searchTimeoutRef.current !== null) {
         window.clearTimeout(searchTimeoutRef.current)
+      }
+
+      if (confirmationTimeoutRef.current !== null) {
+        window.clearTimeout(confirmationTimeoutRef.current)
       }
     }
   }, [])
@@ -129,6 +139,8 @@ function App() {
     setSelectedTrip(null)
     setSelectedSeat(null)
     setPassenger(null)
+    setReservation(null)
+    setIsConfirmingReservation(false)
     setView('search')
   }
 
@@ -143,6 +155,30 @@ function App() {
     setView('search')
   }
 
+  function handleConfirmReservation() {
+    if (!selectedTrip || !selectedSeat || !passenger || isConfirmingReservation) {
+      return
+    }
+
+    setIsConfirmingReservation(true)
+
+    confirmationTimeoutRef.current = window.setTimeout(() => {
+      setReservation({
+        code: generateReservationCode(),
+        trip: selectedTrip,
+        seat: selectedSeat,
+        passenger,
+      })
+      setIsConfirmingReservation(false)
+      setView('success')
+      confirmationTimeoutRef.current = null
+    }, 1000)
+  }
+
+  if (view === 'success' && reservation) {
+    return <SuccessPage reservation={reservation} onNewSearch={handleClearSearch} />
+  }
+
   if (view === 'checkout' && selectedTrip) {
     return (
       <CheckoutPage
@@ -150,9 +186,11 @@ function App() {
         selectedSeat={selectedSeat}
         passenger={passenger}
         searchContext={searchContext}
+        isConfirmingReservation={isConfirmingReservation}
         onSeatChange={setSelectedSeat}
         onPassengerChange={setPassenger}
         onBackToResults={handleBackToResults}
+        onConfirmReservation={handleConfirmReservation}
       />
     )
   }

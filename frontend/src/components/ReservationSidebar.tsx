@@ -7,6 +7,7 @@ type ReservationSidebarProps = {
   selectedSeat: string | null
   passenger: Passenger | null
   canConfirm: boolean
+  isConfirming: boolean
   onConfirm: () => void
 }
 
@@ -15,6 +16,7 @@ export function ReservationSidebar({
   selectedSeat,
   passenger,
   canConfirm,
+  isConfirming,
   onConfirm,
 }: ReservationSidebarProps) {
   return (
@@ -55,13 +57,15 @@ export function ReservationSidebar({
 
           <button
             type="button"
-            className="reservation-sidebar__confirm"
-            disabled={!canConfirm}
+            className={`reservation-sidebar__confirm ${isConfirming ? 'reservation-sidebar__confirm--loading' : ''}`}
+            disabled={!canConfirm || isConfirming}
+            aria-busy={isConfirming}
             onClick={onConfirm}
           >
-            Confirmar reserva
+            {isConfirming ? <span className="button-spinner" aria-hidden="true" /> : null}
+            <span>{isConfirming ? 'Confirmando...' : 'Confirmar reserva'}</span>
           </button>
-          {!canConfirm ? (
+          {!canConfirm && !isConfirming ? (
             <p className="reservation-sidebar__hint">Preencha os dados para continuar</p>
           ) : null}
         </div>

@@ -14,9 +14,11 @@ type CheckoutPageProps = {
   selectedSeat: string | null
   passenger: Passenger | null
   searchContext: SearchFormValues | null
+  isConfirmingReservation: boolean
   onSeatChange: (seat: string) => void
   onPassengerChange: (passenger: Passenger) => void
   onBackToResults: () => void
+  onConfirmReservation: () => void
 }
 
 export function CheckoutPage({
@@ -24,9 +26,11 @@ export function CheckoutPage({
   selectedSeat,
   passenger,
   searchContext,
+  isConfirmingReservation,
   onSeatChange,
   onPassengerChange,
   onBackToResults,
+  onConfirmReservation,
 }: CheckoutPageProps) {
   const [isSeatModalOpen, setIsSeatModalOpen] = useState(false)
   const [isPassengerFormOpen, setIsPassengerFormOpen] = useState(false)
@@ -68,13 +72,8 @@ export function CheckoutPage({
               selectedSeat={selectedSeat}
               passenger={passenger}
               canConfirm={canConfirmReservation}
-              onConfirm={() =>
-                console.log('TODO: confirmar reserva', {
-                  trip,
-                  selectedSeat,
-                  passenger,
-                })
-              }
+              isConfirming={isConfirmingReservation}
+              onConfirm={onConfirmReservation}
             />
           </div>
         </Container>
