@@ -52,10 +52,14 @@ export function CheckoutSteps({
         <div className="checkout-step-row__content">
           <strong>Assento</strong>
           <span className={hasSeat ? 'checkout-step-row__status--done' : ''}>
-            {selectedSeat ?? 'Não selecionado'}
+            {hasSeat ? 'Selecionado' : 'Não selecionado'}
           </span>
         </div>
-        <button type="button" className="checkout-step-button" onClick={onSeatClick}>
+        <button
+          type="button"
+          className={`checkout-step-button ${hasSeat ? 'checkout-step-button--ghost' : ''}`}
+          onClick={onSeatClick}
+        >
           {hasSeat ? 'Alterar' : 'Selecionar assento'}
         </button>
       </div>

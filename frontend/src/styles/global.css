@@ -664,8 +664,8 @@ input {
   align-items: center;
   padding: 3px 10px;
   border-radius: 999px;
-  background: #f7f7f7;
-  color: #7a7a7a;
+  background: #e6f1fb;
+  color: #1a4fa0;
   font-size: 0.75rem;
   font-weight: 600;
 }
@@ -750,6 +750,7 @@ input {
 .checkout-step-row__icon svg {
   width: 1.25rem;
   height: 1.25rem;
+  display: block;
 }
 
 .checkout-step-row--done .checkout-step-row__icon {
@@ -775,9 +776,9 @@ input {
   font-size: 0.75rem;
 }
 
-.checkout-step-row__status--done {
+.checkout-step-row__content span.checkout-step-row__status--done {
   color: #3b9b1f;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .checkout-step-button {
@@ -789,6 +790,18 @@ input {
   color: #ffffff;
   font-size: 0.8125rem;
   font-weight: 500;
+}
+
+.checkout-step-button--ghost {
+  background: transparent;
+  color: #888888;
+  border: 1px solid #e0e0e0;
+}
+
+.checkout-step-button--ghost:hover {
+  background: #f7f7f7;
+  border-color: #bbbbbb;
+  color: #444444;
 }
 
 .reservation-sidebar {
@@ -841,9 +854,9 @@ input {
 }
 
 .reservation-sidebar__row strong {
-  color: var(--color-text-2);
+  color: #3d4451;
   font-size: 0.875rem;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .reservation-sidebar__row--total {
