@@ -8,7 +8,11 @@ import type { Reservation } from './types/reservation'
 import type { SearchErrors, SearchFormValues } from './types/search'
 import type { Trip } from './types/trip'
 import { normalizeText } from './utils/formatters'
-import { generateReservationCode } from './utils/reservation'
+import {
+  generateReservationCode,
+  saveReservation,
+  updateReservationStatus,
+} from './utils/reservation'
 
 type View = 'search' | 'checkout' | 'success'
 
@@ -148,6 +152,7 @@ function App() {
     setSelectedTrip(trip)
     setSelectedSeat(null)
     setPassenger(null)
+    setReservation(null)
     setView('checkout')
   }
 
@@ -163,20 +168,56 @@ function App() {
     setIsConfirmingReservation(true)
 
     confirmationTimeoutRef.current = window.setTimeout(() => {
-      setReservation({
+      const nextReservation: Reservation = {
         code: generateReservationCode(),
+        status: 'Confirmada',
         trip: selectedTrip,
         seat: selectedSeat,
         passenger,
-      })
+        total: selectedTrip.price,
+        createdAt: new Date().toISOString(),
+        travelDate: searchContext?.departure ?? null,
+      }
+
+      saveReservation(nextReservation)
+      setReservation(nextReservation)
       setIsConfirmingReservation(false)
       setView('success')
       confirmationTimeoutRef.current = null
     }, 1000)
   }
 
+  function handleConsultReservation() {
+    if (!reservation) {
+      return
+    }
+
+    console.log('TODO: abrir tela de consulta da reserva', reservation.code)
+  }
+
+  function handleCancelReservation() {
+    if (!reservation) {
+      return
+    }
+
+    const nextReservation: Reservation = {
+      ...reservation,
+      status: 'Cancelada',
+    }
+
+    updateReservationStatus(reservation.code, 'Cancelada')
+    setReservation(nextReservation)
+  }
+
   if (view === 'success' && reservation) {
-    return <SuccessPage reservation={reservation} onNewSearch={handleClearSearch} />
+    return (
+      <SuccessPage
+        reservation={reservation}
+        onNewSearch={handleClearSearch}
+        onConsultReservation={handleConsultReservation}
+        onCancelReservation={handleCancelReservation}
+      />
+    )
   }
 
   if (view === 'checkout' && selectedTrip) {
