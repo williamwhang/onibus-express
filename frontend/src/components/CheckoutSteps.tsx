@@ -26,28 +26,37 @@ function PassengerIcon() {
 }
 
 type CheckoutStepsProps = {
+  selectedSeat: string | null
   onSeatClick: () => void
   onPassengerClick: () => void
 }
 
-export function CheckoutSteps({ onSeatClick, onPassengerClick }: CheckoutStepsProps) {
+export function CheckoutSteps({
+  selectedSeat,
+  onSeatClick,
+  onPassengerClick,
+}: CheckoutStepsProps) {
+  const hasSeat = Boolean(selectedSeat)
+
   return (
     <section className="checkout-main-card">
       <div className="checkout-main-card__header">
         <h2>Detalhes do passageiro</h2>
       </div>
 
-      <div className="checkout-step-row">
-        <div className="checkout-step-row__index">1</div>
+      <div className={`checkout-step-row ${hasSeat ? 'checkout-step-row--done' : ''}`}>
+        <div className="checkout-step-row__index">{hasSeat ? '✓' : '1'}</div>
         <div className="checkout-step-row__icon">
           <SeatIcon />
         </div>
         <div className="checkout-step-row__content">
           <strong>Assento</strong>
-          <span>Não selecionado</span>
+          <span className={hasSeat ? 'checkout-step-row__status--done' : ''}>
+            {selectedSeat ?? 'Não selecionado'}
+          </span>
         </div>
         <button type="button" className="checkout-step-button" onClick={onSeatClick}>
-          Selecionar assento
+          {hasSeat ? 'Alterar' : 'Selecionar assento'}
         </button>
       </div>
 

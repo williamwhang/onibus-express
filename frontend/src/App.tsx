@@ -18,6 +18,7 @@ function App() {
   const searchTimeoutRef = useRef<number | null>(null)
   const [view, setView] = useState<View>('search')
   const [selectedTrip, setSelectedTrip] = useState<Trip | null>(null)
+  const [selectedSeat, setSelectedSeat] = useState<string | null>(null)
   const [formValues, setFormValues] = useState<SearchFormValues>(initialValues)
   const [errors, setErrors] = useState<SearchErrors>({})
   const [loading, setLoading] = useState(false)
@@ -124,11 +125,13 @@ function App() {
     setResults([])
     setSearchContext(null)
     setSelectedTrip(null)
+    setSelectedSeat(null)
     setView('search')
   }
 
   function handleSelectTrip(trip: Trip) {
     setSelectedTrip(trip)
+    setSelectedSeat(null)
     setView('checkout')
   }
 
@@ -140,7 +143,9 @@ function App() {
     return (
       <CheckoutPage
         trip={selectedTrip}
+        selectedSeat={selectedSeat}
         searchContext={searchContext}
+        onSeatChange={setSelectedSeat}
         onBackToResults={handleBackToResults}
       />
     )

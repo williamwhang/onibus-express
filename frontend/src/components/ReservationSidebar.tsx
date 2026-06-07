@@ -3,9 +3,10 @@ import { formatCurrency } from '../utils/formatters'
 
 type ReservationSidebarProps = {
   trip: Trip
+  selectedSeat: string | null
 }
 
-export function ReservationSidebar({ trip }: ReservationSidebarProps) {
+export function ReservationSidebar({ trip, selectedSeat }: ReservationSidebarProps) {
   return (
     <aside className="reservation-sidebar">
       <div className="reservation-sidebar__card">
@@ -17,7 +18,7 @@ export function ReservationSidebar({ trip }: ReservationSidebarProps) {
         <div className="reservation-sidebar__body">
           <div className="reservation-sidebar__row">
             <span>Assento</span>
-            <strong>—</strong>
+            <strong>{selectedSeat ?? '—'}</strong>
           </div>
           <div className="reservation-sidebar__row">
             <span>Passageiro</span>
