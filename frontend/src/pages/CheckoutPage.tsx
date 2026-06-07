@@ -4,6 +4,7 @@ import { Container } from '../components/Container'
 import { Header } from '../components/Header'
 import { ReservationSidebar } from '../components/ReservationSidebar'
 import { SeatSelectionModal } from '../components/SeatSelectionModal'
+import type { Passenger } from '../types/passenger'
 import type { SearchFormValues } from '../types/search'
 import type { Trip } from '../types/trip'
 import { useState } from 'react'
@@ -11,19 +12,25 @@ import { useState } from 'react'
 type CheckoutPageProps = {
   trip: Trip
   selectedSeat: string | null
+  passenger: Passenger | null
   searchContext: SearchFormValues | null
   onSeatChange: (seat: string) => void
+  onPassengerChange: (passenger: Passenger) => void
   onBackToResults: () => void
 }
 
 export function CheckoutPage({
   trip,
   selectedSeat,
+  passenger,
   searchContext,
   onSeatChange,
+  onPassengerChange,
   onBackToResults,
 }: CheckoutPageProps) {
   const [isSeatModalOpen, setIsSeatModalOpen] = useState(false)
+  const [isPassengerFormOpen, setIsPassengerFormOpen] = useState(false)
+  const canConfirmReservation = Boolean(selectedSeat && passenger)
 
   return (
     <div className="app-shell">
@@ -44,12 +51,31 @@ export function CheckoutPage({
             <div className="checkout-layout__main">
               <CheckoutSteps
                 selectedSeat={selectedSeat}
+                passenger={passenger}
+                isPassengerFormOpen={isPassengerFormOpen}
                 onSeatClick={() => setIsSeatModalOpen(true)}
-                onPassengerClick={() => console.log('TODO: abrir formulario do passageiro')}
+                onPassengerClick={() => setIsPassengerFormOpen(true)}
+                onPassengerCancel={() => setIsPassengerFormOpen(false)}
+                onPassengerSave={(nextPassenger) => {
+                  onPassengerChange(nextPassenger)
+                  setIsPassengerFormOpen(false)
+                }}
               />
             </div>
 
-            <ReservationSidebar trip={trip} selectedSeat={selectedSeat} />
+            <ReservationSidebar
+              trip={trip}
+              selectedSeat={selectedSeat}
+              passenger={passenger}
+              canConfirm={canConfirmReservation}
+              onConfirm={() =>
+                console.log('TODO: confirmar reserva', {
+                  trip,
+                  selectedSeat,
+                  passenger,
+                })
+              }
+            />
           </div>
         </Container>
       </main>

@@ -1,3 +1,6 @@
+import { PassengerForm } from './PassengerForm'
+import type { Passenger } from '../types/passenger'
+
 function SeatIcon() {
   return (
     <svg
@@ -27,16 +30,25 @@ function PassengerIcon() {
 
 type CheckoutStepsProps = {
   selectedSeat: string | null
+  passenger: Passenger | null
+  isPassengerFormOpen: boolean
   onSeatClick: () => void
   onPassengerClick: () => void
+  onPassengerCancel: () => void
+  onPassengerSave: (passenger: Passenger) => void
 }
 
 export function CheckoutSteps({
   selectedSeat,
+  passenger,
+  isPassengerFormOpen,
   onSeatClick,
   onPassengerClick,
+  onPassengerCancel,
+  onPassengerSave,
 }: CheckoutStepsProps) {
   const hasSeat = Boolean(selectedSeat)
+  const hasPassenger = Boolean(passenger)
 
   return (
     <section className="checkout-main-card">
@@ -64,19 +76,33 @@ export function CheckoutSteps({
         </button>
       </div>
 
-      <div className="checkout-step-row">
-        <div className="checkout-step-row__index">2</div>
+      <div className={`checkout-step-row ${hasPassenger ? 'checkout-step-row--done' : ''}`}>
+        <div className="checkout-step-row__index">{hasPassenger ? '✓' : '2'}</div>
         <div className="checkout-step-row__icon">
           <PassengerIcon />
         </div>
         <div className="checkout-step-row__content">
           <strong>Dados do passageiro</strong>
-          <span>Não informado</span>
+          <span className={hasPassenger ? 'checkout-step-row__status--done' : ''}>
+            {hasPassenger ? 'Preenchido' : 'Não informado'}
+          </span>
         </div>
-        <button type="button" className="checkout-step-button" onClick={onPassengerClick}>
-          Preencher
+        <button
+          type="button"
+          className={`checkout-step-button ${hasPassenger ? 'checkout-step-button--ghost' : ''}`}
+          onClick={onPassengerClick}
+        >
+          {hasPassenger ? 'Alterar' : 'Preencher'}
         </button>
       </div>
+
+      {isPassengerFormOpen ? (
+        <PassengerForm
+          initialPassenger={passenger}
+          onCancel={onPassengerCancel}
+          onSave={onPassengerSave}
+        />
+      ) : null}
     </section>
   )
 }

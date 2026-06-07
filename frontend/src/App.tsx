@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { trips as mockTrips } from './data/trips'
 import { CheckoutPage } from './pages/CheckoutPage'
 import { SearchPage } from './pages/SearchPage'
+import type { Passenger } from './types/passenger'
 import type { SearchErrors, SearchFormValues } from './types/search'
 import type { Trip } from './types/trip'
 import { normalizeText } from './utils/formatters'
@@ -19,6 +20,7 @@ function App() {
   const [view, setView] = useState<View>('search')
   const [selectedTrip, setSelectedTrip] = useState<Trip | null>(null)
   const [selectedSeat, setSelectedSeat] = useState<string | null>(null)
+  const [passenger, setPassenger] = useState<Passenger | null>(null)
   const [formValues, setFormValues] = useState<SearchFormValues>(initialValues)
   const [errors, setErrors] = useState<SearchErrors>({})
   const [loading, setLoading] = useState(false)
@@ -126,12 +128,14 @@ function App() {
     setSearchContext(null)
     setSelectedTrip(null)
     setSelectedSeat(null)
+    setPassenger(null)
     setView('search')
   }
 
   function handleSelectTrip(trip: Trip) {
     setSelectedTrip(trip)
     setSelectedSeat(null)
+    setPassenger(null)
     setView('checkout')
   }
 
@@ -144,8 +148,10 @@ function App() {
       <CheckoutPage
         trip={selectedTrip}
         selectedSeat={selectedSeat}
+        passenger={passenger}
         searchContext={searchContext}
         onSeatChange={setSelectedSeat}
+        onPassengerChange={setPassenger}
         onBackToResults={handleBackToResults}
       />
     )
