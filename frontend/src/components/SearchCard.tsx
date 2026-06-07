@@ -1,10 +1,31 @@
-const fields = [
-  { id: 'origin', label: 'Origem', placeholder: 'Cidade de origem' },
-  { id: 'destination', label: 'Destino', placeholder: 'Cidade de destino' },
-  { id: 'departure', label: 'Partida', placeholder: 'Selecione a data' },
-] as const
+type SearchField = 'origin' | 'destination' | 'departure'
 
-export function SearchCard() {
+type SearchCardProps = {
+  values: Record<SearchField, string>
+  errors: Partial<Record<SearchField, string>>
+  isLoading: boolean
+  onFieldChange: (field: SearchField, value: string) => void
+  onSearch: () => void
+}
+
+const fields: Array<{
+  id: SearchField
+  label: string
+  placeholder: string
+  type: 'text' | 'date'
+}> = [
+  { id: 'origin', label: 'Origem', placeholder: 'Cidade de origem', type: 'text' },
+  { id: 'destination', label: 'Destino', placeholder: 'Cidade de destino', type: 'text' },
+  { id: 'departure', label: 'Partida', placeholder: 'Selecione a data', type: 'date' },
+]
+
+export function SearchCard({
+  values,
+  errors,
+  isLoading,
+  onFieldChange,
+  onSearch,
+}: SearchCardProps) {
   return (
     <div className="search-card">
       <div className="search-tabs" role="tablist" aria-label="Tipo de viagem">
@@ -23,20 +44,35 @@ export function SearchCard() {
 
       <div className="search-card__body">
         <div className="search-form" role="group" aria-label="Busca de passagens">
-          {fields.map((field) => (
-            <label key={field.id} className="search-field">
-              <span className="search-field__label">{field.label}</span>
-              <input
-                id={field.id}
-                name={field.id}
-                type={field.id === 'departure' ? 'date' : 'text'}
-                placeholder={field.placeholder}
-                aria-label={field.label}
-              />
-            </label>
-          ))}
+          {fields.map((field) => {
+            const error = errors[field.id]
 
-          <button type="button" className="search-button">
+            return (
+              <div key={field.id} className="search-field-group">
+                <label className={`search-field ${error ? 'search-field--error' : ''}`}>
+                  <span className="search-field__label">{field.label}</span>
+                  <input
+                    id={field.id}
+                    name={field.id}
+                    type={field.type}
+                    value={values[field.id]}
+                    placeholder={field.placeholder}
+                    aria-label={field.label}
+                    aria-invalid={Boolean(error)}
+                    aria-describedby={error ? `${field.id}-error` : undefined}
+                    onChange={(event) => onFieldChange(field.id, event.target.value)}
+                  />
+                </label>
+                {error ? (
+                  <span id={`${field.id}-error`} className="search-field__error">
+                    {error}
+                  </span>
+                ) : null}
+              </div>
+            )
+          })}
+
+          <button type="button" className="search-button" onClick={onSearch} disabled={isLoading}>
             <svg
               viewBox="0 0 24 24"
               fill="none"
@@ -49,7 +85,7 @@ export function SearchCard() {
               <circle cx="11" cy="11" r="7" />
               <line x1="16.5" y1="16.5" x2="22" y2="22" />
             </svg>
-            Buscar
+            {isLoading ? 'Buscando...' : 'Buscar'}
           </button>
         </div>
       </div>
