@@ -1,10 +1,6 @@
 import type { Trip } from '../types/trip'
 import type { SearchFormValues } from '../types/search'
-import {
-  formatLongDate,
-  generateCompanyCode,
-  generateTripCode,
-} from '../utils/formatters'
+import { formatLongDate, generateCompanyCode } from '../utils/formatters'
 import { Chip } from './Chip'
 import { TripJourney } from './TripJourney'
 
@@ -14,7 +10,6 @@ type CheckoutTripSummaryProps = {
 }
 
 export function CheckoutTripSummary({ trip, searchContext }: CheckoutTripSummaryProps) {
-  const tripCode = generateTripCode(trip.origin, trip.destination, trip.departureTime)
   const companyCode = generateCompanyCode(trip.company, trip.departureTime)
 
   return (
@@ -22,7 +17,9 @@ export function CheckoutTripSummary({ trip, searchContext }: CheckoutTripSummary
       <div className="checkout-banner-card">
         <div className="checkout-banner-card__header">
           <h2>VIAGEM SELECIONADA</h2>
-          <span className="checkout-banner-card__tag">Somente ida</span>
+          <Chip variant="blue" className="checkout-banner-card__tag">
+            Somente ida
+          </Chip>
         </div>
 
         <div className="checkout-banner-card__body">
@@ -32,12 +29,6 @@ export function CheckoutTripSummary({ trip, searchContext }: CheckoutTripSummary
             companyContent={companyCode}
             metadataExtras={
               <>
-                <span className="trip-code-group">
-                  <span className="trip-meta trip-meta--label">Código da viagem:</span>
-                  <span className="trip-meta trip-meta--code">
-                    <Chip variant="blue">{tripCode}</Chip>
-                  </span>
-                </span>
                 {searchContext?.departure ? (
                   <span className="trip-meta trip-meta--code">
                     <Chip>{formatLongDate(searchContext.departure)}</Chip>

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { trips as mockTrips } from './data/trips'
 import { CheckoutPage } from './pages/CheckoutPage'
+import { ReservationLookupPage } from './pages/ReservationLookupPage'
 import { SearchPage } from './pages/SearchPage'
 import { SuccessPage } from './pages/SuccessPage'
 import type { Passenger } from './types/passenger'
@@ -14,7 +15,7 @@ import {
   updateReservationStatus,
 } from './utils/reservation'
 
-type View = 'search' | 'checkout' | 'success'
+type View = 'search' | 'checkout' | 'success' | 'lookup'
 
 const initialValues: SearchFormValues = {
   origin: '',
@@ -188,11 +189,7 @@ function App() {
   }
 
   function handleConsultReservation() {
-    if (!reservation) {
-      return
-    }
-
-    console.log('TODO: abrir tela de consulta da reserva', reservation.code)
+    setView('lookup')
   }
 
   function handleCancelReservation() {
@@ -209,6 +206,12 @@ function App() {
     setReservation(nextReservation)
   }
 
+  function handleLookupReservationCanceled(updatedReservation: Reservation) {
+    if (reservation?.code === updatedReservation.code) {
+      setReservation(updatedReservation)
+    }
+  }
+
   if (view === 'success' && reservation) {
     return (
       <SuccessPage
@@ -216,6 +219,18 @@ function App() {
         onNewSearch={handleClearSearch}
         onConsultReservation={handleConsultReservation}
         onCancelReservation={handleCancelReservation}
+      />
+    )
+  }
+
+  if (view === 'lookup') {
+    return (
+      <ReservationLookupPage
+        currentReservation={reservation}
+        onBackToSearch={handleClearSearch}
+        onBackToSuccess={reservation ? () => setView('success') : undefined}
+        onNewSearch={handleClearSearch}
+        onReservationCanceled={handleLookupReservationCanceled}
       />
     )
   }

@@ -2,7 +2,7 @@ import type { ReactNode } from 'react'
 
 type ChipProps = {
   children: ReactNode
-  variant?: 'neutral' | 'blue'
+  variant?: 'neutral' | 'blue' | 'confirmed' | 'cancelled'
   className?: string
 }
 

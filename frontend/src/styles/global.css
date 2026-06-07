@@ -143,6 +143,21 @@ input {
   font-weight: 700;
 }
 
+.chip--confirmed {
+  background: #ffffff;
+  color: #258b16;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.chip--cancelled {
+  background: #ffffff;
+  color: #b42318;
+  border: 1px solid #f0b8b8;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
 .hero-section {
   padding: clamp(2rem, 5vw, 1.5rem) 0 clamp(3rem, 6vw, 4.5rem);
 }
@@ -659,17 +674,6 @@ input {
   text-transform: uppercase;
 }
 
-.checkout-banner-card__tag {
-  display: inline-flex;
-  align-items: center;
-  padding: 3px 10px;
-  border-radius: 999px;
-  background: #e6f1fb;
-  color: #1a4fa0;
-  font-size: 0.75rem;
-  font-weight: 600;
-}
-
 .checkout-banner-card__body {
   padding: 0.5rem 0;
 }
@@ -1052,6 +1056,110 @@ input {
   }
 }
 
+.app-button {
+  min-height: 3rem;
+  padding: 0 1.25rem;
+  border-radius: 0.625rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  font-family: inherit;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.app-button--graphite {
+  background: #1a1a1a;
+  color: #ffffff;
+  border: 1.5px solid #1a1a1a;
+}
+
+.app-button--graphite:hover:not(:disabled) {
+  background: #333333;
+  border-color: #333333;
+  color: #ffffff;
+}
+
+.app-button--graphite:active:not(:disabled) {
+  background: #000000;
+  border-color: #000000;
+  color: #ffffff;
+}
+
+.app-button--graphite:disabled {
+  background: #d0d0d0;
+  border-color: #d0d0d0;
+  color: #ffffff;
+  cursor: not-allowed;
+}
+
+.app-button--graphite.app-button--loading:disabled {
+  background: #1a1a1a;
+  border-color: #1a1a1a;
+  color: #ffffff;
+  opacity: 1;
+  cursor: wait;
+}
+
+.app-button--outlineDanger {
+  background: #ffffff;
+  color: #cc0000;
+  border: 1.5px solid #cc0000;
+}
+
+.app-button--outlineDanger:hover:not(:disabled) {
+  background: #cc0000;
+  color: #ffffff;
+  border-color: #cc0000;
+}
+
+.app-button--outlineDanger:active:not(:disabled) {
+  background: #aa0000;
+  color: #ffffff;
+  border-color: #aa0000;
+}
+
+.app-button--outlineDanger:disabled {
+  background: #d0d0d0;
+  border-color: #d0d0d0;
+  color: #ffffff;
+  cursor: not-allowed;
+}
+
+.app-button--primaryDanger {
+  background: #cc0000;
+  color: #ffffff;
+  border: 1.5px solid #cc0000;
+}
+
+.app-button--primaryDanger:hover:not(:disabled) {
+  background: #aa0000;
+  border-color: #aa0000;
+  color: #ffffff;
+}
+
+.app-button--primaryDanger:active:not(:disabled) {
+  background: #aa0000;
+  border-color: #aa0000;
+  color: #ffffff;
+}
+
+.app-button--primaryDanger:disabled {
+  background: #d0d0d0;
+  border-color: #d0d0d0;
+  color: #ffffff;
+  cursor: not-allowed;
+}
+
+.app-button--primaryDanger.app-button--loading:disabled {
+  background: #cc0000;
+  border-color: #cc0000;
+  color: #ffffff;
+  opacity: 1;
+  cursor: wait;
+}
+
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -1400,26 +1508,463 @@ input {
 }
 
 .empty-state {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   padding: 6.5rem 1.5rem;
   border-radius: var(--radius-lg);
   background: #f4f4f4;
   text-align: center;
 }
 
-.empty-state h2 {
-  margin: 0 0 0.625rem;
+.empty-state h2,
+.empty-state__title {
+  margin: 0;
   color: #4a4848;
   font-size: 1.8rem;
   font-weight: 800;
-  line-height: 1.25;
+  line-height: 1.2;
 }
 
-.empty-state p {
+.empty-state p,
+.empty-state__description {
   max-width: 27rem;
-  margin: 0 auto;
+  margin: 0.75rem 0 0;
+  color: #6f6f6f;
+  font-size: 1rem;
+  line-height: 1.45;
+}
+
+.empty-state__support {
+  max-width: 27rem;
+  margin: 0.5rem 0 0;
+  color: #8a8a8a;
+  font-size: 0.95rem;
+  line-height: 1.45;
+}
+
+.lookup-page {
+  padding: 2.5rem 0 3rem;
+}
+
+.lookup-page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.lookup-page-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+.lookup-page-title {
+  margin: 0;
+  color: #111111;
+  font-size: clamp(1.75rem, 4vw, 2.25rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+.lookup-page-subrow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.lookup-page-subtitle {
+  margin: 0;
+  color: #888888;
+  font-size: 0.9375rem;
+  line-height: 1.4;
+  max-width: 52rem;
+}
+
+.lookup-card,
+.lookup-result-card {
+  border: 1px solid #e0e0e0;
+  border-radius: 14px;
+  background: #ffffff;
+  box-shadow: var(--shadow-card);
+}
+
+.lookup-card {
+  padding: 1.5rem;
+}
+
+.lookup-form-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.lookup-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.lookup-label {
+  color: var(--color-text-3);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.lookup-input {
+  height: 4rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #111111;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  outline: none;
+}
+
+.lookup-input:focus {
+  border-color: #111111;
+  box-shadow: 0 0 0 3px rgba(17, 17, 17, 0.06);
+}
+
+.lookup-input--error {
+  border-color: #cc0000;
+}
+
+.lookup-error {
+  margin: 0;
+  color: #cc0000;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.lookup-submit-button {
+  min-width: 12rem;
+  height: 4.125rem;
+  min-height: 4.125rem;
+  max-height: 4.125rem;
+  padding: 0 1.5rem;
+  border-radius: 0.625rem;
+  border: 1.5px solid #111111;
+  background: #111111;
+  color: #ffffff;
+  font-size: 0.875rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  align-self: flex-start;
+  white-space: nowrap;
+}
+
+.lookup-submit-button:hover {
+  background: #333333;
+  border-color: #333333;
+}
+
+.lookup-submit-button:disabled {
+  cursor: not-allowed;
+}
+
+.lookup-submit-button.is-loading,
+.lookup-submit-button.is-loading:disabled {
+  background: #111111;
+  border-color: #111111;
+  color: #ffffff;
+  opacity: 1;
+  cursor: wait;
+}
+
+.lookup-empty-state,
+.lookup-result-card {
+  margin-top: 1rem;
+}
+
+.lookup-active-filters {
+  margin-top: 1rem;
+}
+
+.lookup-empty-state {
+  background: #f4f4f4;
+  border: none;
+  box-shadow: none;
+}
+
+.lookup-empty-state .empty-state__description {
+  max-width: none;
+}
+
+.lookup-result-card {
+  overflow: hidden;
+  border: none;
+  background: transparent;
+  box-shadow: none;
+}
+
+.lookup-result-card .reservation-success-card {
+  box-shadow: var(--shadow-card);
+}
+
+.lookup-result-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.lookup-result-header h2 {
+  margin: 0;
+  color: #111111;
+  font-size: 1.25rem;
+  font-weight: 800;
+}
+
+.lookup-result-subtitle {
+  margin: 0.375rem 0 0;
+  color: #6b7280;
+  font-size: 0.875rem;
+}
+
+.lookup-status-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.375rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.lookup-status-badge--confirmed {
+  background: #edf7e8;
+  color: #2e8b14;
+  border: 1px solid #c8e6be;
+}
+
+.lookup-status-badge--canceled {
+  background: #fff1f1;
+  color: #cc0000;
+  border: 1px solid #f0b8b8;
+}
+
+.lookup-section + .lookup-section {
+  margin-top: 1.25rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--color-border-soft);
+}
+
+.lookup-section-title {
+  display: block;
+  margin-bottom: 0.75rem;
+  color: var(--color-text-4);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.lookup-code-box {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 0.75rem;
+  border-radius: 10px;
+  background: #e6f1fb;
+  color: #1a4fa0;
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+.lookup-detail-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+}
+
+.lookup-detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.lookup-detail-label {
+  color: #b0b0b0;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.lookup-detail-value {
+  color: #3d4451;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-align: right;
+}
+
+.lookup-detail-value--wrap {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.lookup-detail-value--total {
+  color: #111111;
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+}
+
+.lookup-cancel-area {
+  margin-top: 1.25rem;
+}
+
+.lookup-cancel-button {
+  min-height: 44px;
+  padding: 0 1.25rem;
+  border: 1.5px solid #cc0000;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #cc0000;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.lookup-cancel-button:hover {
+  background: #fff5f5;
+  border-color: #aa0000;
+  color: #aa0000;
+}
+
+.lookup-new-search-button {
+  flex-shrink: 0;
+  height: 3rem;
+  padding: 0 1.25rem;
+  border-radius: 0.625rem;
+  border: 1.5px solid #cc0000;
+  background: #ffffff;
+  color: #cc0000;
+  font-size: 0.875rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.lookup-new-search-button:hover {
+  background: #cc0000;
+  color: #ffffff;
+  border-color: #cc0000;
+}
+
+.lookup-new-search-button:active {
+  background: #aa0000;
+  color: #ffffff;
+  border-color: #aa0000;
+}
+
+.reservation-cancel-confirm {
+  width: 100%;
+  margin-top: 1rem;
+  padding: 1rem 1.25rem;
+  border: 1px solid #f2b8b8;
+  border-radius: 0.875rem;
+  background: #fff5f5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.reservation-cancel-confirm__text {
+  margin: 0;
+  color: #6f4a4a;
+  font-size: 0.95rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.reservation-cancel-confirm__actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  flex-shrink: 0;
+}
+
+.reservation-cancel-confirm__keep,
+.reservation-cancel-confirm__confirm {
+  height: 2.75rem;
+  padding: 0 1.25rem;
+  border-radius: 0.625rem;
+  font-family: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.reservation-cancel-confirm__keep {
+  border: 1px solid #d7d7d7;
+  background: #ffffff;
+  color: #666666;
+}
+
+.reservation-cancel-confirm__keep:hover {
+  background: #f7f7f7;
+  border-color: #c8c8c8;
+}
+
+.reservation-cancel-confirm__confirm {
+  border: 1.5px solid #cc0000;
+  background: #ffffff;
+  color: #cc0000;
+}
+
+.reservation-cancel-confirm__confirm:hover {
+  background: #cc0000;
+  border-color: #cc0000;
+  color: #ffffff;
+}
+
+.lookup-back-search {
+  min-width: 12rem;
+  height: 4.125rem;
+  min-height: 4.125rem;
+  max-height: 4.125rem;
+  padding: 0 1.25rem;
+  border: 1px solid #d7d7d7;
+  border-radius: 10px;
+  background: #ffffff;
   color: #666666;
   font-size: 0.875rem;
-  line-height: 1.5;
+  font-weight: 600;
+  align-self: flex-start;
+  white-space: nowrap;
+}
+
+.lookup-new-search-button {
+  white-space: nowrap;
+}
+
+.lookup-back-search:hover {
+  background: #f7f7f7;
+  border-color: #bbbbbb;
+  color: #444444;
 }
 
 .success-layout {
@@ -1440,33 +1985,48 @@ input {
 
 .reservation-success-card__header {
   padding: 1.375rem 1.5rem;
-  border-bottom: 1px solid #c8e6be;
-  background: #edf7e8;
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: center;
   gap: 1rem;
 }
 
+.reservation-success-card__header--confirmed {
+  background: #eef9e9;
+  border-bottom: 1px solid #cfe8c7;
+}
+
+.reservation-success-card__header--cancelled {
+  background: #fff4f4;
+  border-bottom: 1px solid #f2b8b8;
+}
+
 .reservation-success-card__icon {
   width: 3rem;
   height: 3rem;
   border-radius: 999px;
-  background: #2e8b14;
-  color: #ffffff;
   display: inline-flex;
   align-items: center;
   justify-content: center;
 }
 
+.reservation-success-card__icon--confirmed {
+  background: #258b16;
+  color: #ffffff;
+}
+
+.reservation-success-card__icon--cancelled {
+  background: #d92d20;
+  color: #ffffff;
+}
+
 .reservation-success-card__icon svg {
-  width: 1.4rem;
-  height: 1.4rem;
+  width: 1.75rem;
+  height: 1.75rem;
 }
 
 .reservation-success-card__heading h1 {
   margin: 0;
-  color: #16310c;
   font-size: 1.35rem;
   font-weight: 800;
   letter-spacing: -0.03em;
@@ -1474,25 +2034,28 @@ input {
 
 .reservation-success-card__heading p {
   margin: 0.3rem 0 0;
-  color: #52714a;
   font-size: 0.875rem;
   line-height: 1.45;
 }
 
-.reservation-success-card__badge {
-  display: inline-flex;
-  align-items: center;
-  white-space: nowrap;
-  padding: 0.375rem 0.75rem;
-  border-radius: 999px;
-  background: #ffffff;
-  color: #2e8b14;
-  font-size: 0.75rem;
-  font-weight: 700;
+.reservation-success-card--confirmed .reservation-success-card__heading h1 {
+  color: #16310c;
 }
 
-.reservation-success-card__badge--cancelled {
-  color: #9a3412;
+.reservation-success-card--confirmed .reservation-success-card__heading p {
+  color: #52714a;
+}
+
+.reservation-success-card--cancelled .reservation-success-card__heading h1 {
+  color: #7a1f1f;
+}
+
+.reservation-success-card--cancelled .reservation-success-card__heading p {
+  color: #8b5e5e;
+}
+
+.reservation-success-card__badge {
+  flex-shrink: 0;
 }
 
 .reservation-success-card__body {
@@ -1754,39 +2317,62 @@ input {
 }
 
 .success-page__action--primary {
-  border: 1.5px solid var(--color-red);
-  background: #ffffff;
-  color: var(--color-red);
   font-weight: 700;
 }
 
-.success-page__action--primary:hover {
-  background: var(--color-red);
-  border-color: var(--color-red);
-  color: #ffffff;
-}
-
-.success-page__action--primary:active {
-  background: var(--color-red-dark);
-  border-color: var(--color-red-dark);
-  color: #ffffff;
-}
-
 .success-page__action--secondary {
-  border: 1.5px solid #dedede;
-  background: #ffffff;
-  color: #4b5563;
   font-weight: 600;
-}
-
-.success-page__action--secondary:hover {
-  border-color: #b7c4d6;
-  color: #1f2937;
 }
 
 @media (max-width: 960px) {
   .search-form {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .lookup-form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .lookup-submit-button {
+    width: 100%;
+  }
+
+  .lookup-back-search {
+    width: 100%;
+  }
+
+  .lookup-page-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .lookup-new-search-button {
+    width: 100%;
+  }
+
+  .lookup-result-header,
+  .lookup-detail-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .reservation-cancel-confirm {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .reservation-cancel-confirm__actions {
+    justify-content: stretch;
+    flex-direction: column;
+  }
+
+  .reservation-cancel-confirm__keep,
+  .reservation-cancel-confirm__confirm {
+    width: 100%;
+  }
+
+  .lookup-detail-value {
+    text-align: left;
   }
 
   .search-button {
