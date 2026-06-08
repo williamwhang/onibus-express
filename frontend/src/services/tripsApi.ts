@@ -1,3 +1,4 @@
+import { trips as mockTrips } from '../data/trips'
 import type { Trip } from '../types/trip'
 
 type BackendTrip = {
@@ -13,10 +14,15 @@ type BackendTrip = {
   seatsAvailable: number
 }
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5153'
+const configuredApiUrl = import.meta.env.VITE_API_URL
+const fallbackApiUrl = 'http://localhost:5153'
 
 export async function getTrips(): Promise<Trip[]> {
-  const response = await fetch(`${API_BASE_URL}/api/viagens`)
+  if (!shouldUseRemoteApi()) {
+    return mockTrips
+  }
+
+  const response = await fetch(`${getApiBaseUrl()}/api/viagens`)
 
   if (!response.ok) {
     throw new Error(`Failed to fetch trips: ${response.status}`)
@@ -46,4 +52,16 @@ function mapTripFromApi(trip: BackendTrip): Trip {
 function formatTime(value: string) {
   const [hours = '00', minutes = '00'] = value.split(':')
   return `${hours}:${minutes}`
+}
+
+function shouldUseRemoteApi() {
+  if (configuredApiUrl) {
+    return true
+  }
+
+  return import.meta.env.DEV
+}
+
+function getApiBaseUrl() {
+  return configuredApiUrl || fallbackApiUrl
 }
