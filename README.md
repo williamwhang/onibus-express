@@ -202,71 +202,98 @@ npm run build
 
 ## Screenshots
 
-### Fluxo principal
+### 1. Tela inicial — busca de viagem
 
-#### Busca de viagens
+Tela inicial com formulário para origem, destino e data da viagem.
 
-![Resultado de busca com viagens disponíveis](docs/screenshots/resultado-encontrado.png)
+![Tela inicial — busca de viagem](docs/screenshots/01-busca-viagem.png)
 
-#### Detalhes da viagem selecionada
+### 2. Validação da busca
 
-![Detalhes da viagem selecionada](docs/screenshots/detalhe-reserva.png)
+Validação dos campos obrigatórios ao acionar o botão Buscar sem preencher os dados.
 
-#### Seleção de assento
+![Validação da busca](docs/screenshots/02-validacao-busca-viagem.png)
 
-![Seleção de assento](docs/screenshots/selecao-assento.png)
+### 3. Resultado não encontrado
 
-#### Reserva confirmada
+Estado vazio exibido quando não há viagens para o trecho e data pesquisados.
 
-![Reserva confirmada](docs/screenshots/confirmacao-reserva.png)
+![Resultado não encontrado](docs/screenshots/03-resultado-nao-encontrado.png)
 
-#### Consulta de reserva
+### 4. Resultado encontrado
 
-![Consulta de reserva](docs/screenshots/consulta-reserva.png)
+Lista de viagens encontradas para São Paulo → Rio de Janeiro em 07/06/2026.
 
-### Galeria completa
+![Resultado encontrado](docs/screenshots/04-resultado-encontrado.png)
 
-<details>
-<summary>Ver mais telas do fluxo</summary>
+### 5. Detalhe da reserva
 
-#### Tela inicial de busca
+Após clicar em uma viagem, o usuário acessa a tela de detalhe com a viagem selecionada.
 
-![Tela inicial de busca](docs/screenshots/busca-inicial.png)
+![Detalhe da reserva](docs/screenshots/05-detalhe-reserva.png)
 
-#### Estado vazio da busca
+### 6. Seleção do assento
 
-![Estado vazio da busca](docs/screenshots/resultado-nao-encontrado.png)
+Modal de seleção de assento, com estados de assentos livres, ocupados e selecionados.
 
-#### Resumo com assento selecionado
+![Seleção do assento](docs/screenshots/06-selecao-assento.png)
 
-![Resumo com assento selecionado](docs/screenshots/resumo-assento.png)
+### 7. Resumo com assento selecionado
 
-#### Validação dos dados do passageiro
+Checkout exibindo o assento escolhido antes do preenchimento dos dados do passageiro.
 
-![Validação dos dados do passageiro](docsots/validacao-cpf-email.png)
+![Resumo com assento selecionado](docs/screenshots/07-resumo-assento.png)
 
-#### Resumo com dados preenchidos
+### 8. Validação de CPF e e-mail
 
-![Resumo com dados preenchidos](docs/screenshots/resumo-dados-passageiro.png)
+Exemplo de validação dos campos de CPF e e-mail no formulário de dados do passageiro.
 
-#### Reserva encontrada
+![Validação de CPF e e-mail](docs/screenshots/08-validacao-cpf-email.png)
 
-![Reserva encontrada](docs/screenshots/reserva-encontrada.png)
+### 9. Resumo com dados do passageiro
 
-#### Reserva não encontrada
+Checkout com assento e dados do passageiro preenchidos, liberando a confirmação da reserva.
 
-![Reserva não encontrada](docs/screenshots/reserva-nao-encontrada.png)
+![Resumo com dados do passageiro](docs/screenshots/09-resumo-dados-passageiro.png)
 
-#### Confirmação de cancelamento
+### 10. Confirmação da reserva
 
-![Confirmação de cancelamento](docs/screenshots/passo-cancelamento.png)
+Tela de sucesso com resumo da reserva, código gerado e botão para copiar o código.
 
-#### Cancelamento confirmado
+![Confirmação da reserva](docs/screenshots/10-confirmacao-reserva.png)
 
-![Cancelamento confirmado](docs/screenshots/reserva-cancelada.png)
+### 11. Consulta da reserva
 
-#### Validação da busca
+Tela para consultar uma reserva pelo código.
 
-![Validação da busca](docs/screenshots/validacao-busca.png)
+![Consulta da reserva](docs/screenshots/11-consulta-reserva.png)
 
-</details>
+### 12. Reserva não encontrada
+
+Estado vazio exibido quando o código de reserva não é localizado.
+
+![Reserva não encontrada](docs/screenshots/12-reserva-nao-encontrada.png)
+
+### 13. Reserva encontrada
+
+Resultado da consulta exibindo os detalhes de uma reserva confirmada.
+
+![Reserva encontrada](docs/screenshots/13-reserva-encontrada.png)
+
+### 14. Início do cancelamento da reserva
+
+Estado em que o usuário solicita o cancelamento da reserva.
+
+![Início do cancelamento da reserva](docs/screenshots/14-passo-cancelamento-reserva.png)
+
+### 15. Confirmação do cancelamento
+
+Mensagem de confirmação antes de finalizar o cancelamento da reserva.
+
+![Confirmação do cancelamento](docs/screenshots/15-confirmacao-cancelamento.png)
+
+### 16. Reserva cancelada
+
+Estado visual da reserva após a confirmação do cancelamento.
+
+![Reserva cancelada](docs/screenshots/16-reserva-cancelada.png)
