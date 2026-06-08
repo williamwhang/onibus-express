@@ -4,6 +4,7 @@ import { CheckoutPage } from './pages/CheckoutPage'
 import { ReservationLookupPage } from './pages/ReservationLookupPage'
 import { SearchPage } from './pages/SearchPage'
 import { SuccessPage } from './pages/SuccessPage'
+import { getTrips } from './services/tripsApi'
 import type { Passenger } from './types/passenger'
 import type { Reservation } from './types/reservation'
 import type { SearchErrors, SearchFormValues } from './types/search'
@@ -111,14 +112,24 @@ function App() {
       departure: formValues.departure,
     }
 
-    searchTimeoutRef.current = window.setTimeout(() => {
-      const filteredTrips = mockTrips.filter((trip) => {
+    searchTimeoutRef.current = window.setTimeout(async () => {
+      let availableTrips = mockTrips
+
+      try {
+        availableTrips = await getTrips()
+      } catch (error) {
+        console.warn('Unable to load trips from API, using mock data instead.', error)
+      }
+
+      const filteredTrips = availableTrips.filter((trip) => {
         const normalizedOrigin = normalizeText(trip.origin)
         const normalizedDestination = normalizeText(trip.destination)
+        const matchesDate = !trip.date || trip.date === nextContext.departure
 
         return (
           normalizedOrigin.includes(searchOrigin) &&
-          normalizedDestination.includes(searchDestination)
+          normalizedDestination.includes(searchDestination) &&
+          matchesDate
         )
       })
 

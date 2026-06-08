@@ -6,6 +6,6 @@ export function getSeatCode(seatNumber: number) {
   return `${seatNumber}${suffix}`
 }
 
-export function getOccupiedSeats(_tripId: string) {
+export function getOccupiedSeats(_tripId: string | number) {
   return [...DEFAULT_OCCUPIED_SEATS]
 }
