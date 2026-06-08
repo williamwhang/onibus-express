@@ -4,3 +4,18 @@ build/
 .env
 .env.local
 .DS_Store
+
+# .NET
+**/bin/
+**/obj/
+
+# Node / Vite
+node_modules/
+dist/
+
+# Environment
+.env
+.env.local
+
+# macOS
+.DS_Store
